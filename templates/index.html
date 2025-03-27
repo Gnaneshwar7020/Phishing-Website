@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phishing Detection Project</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f0f5e1; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="text-align: center; background-color: #fff; padding: 40px; border: 2px solid #000; border-radius: 10px; width: 600px;">
+        <h1 style="font-size: 24px; margin: 0; text-transform: uppercase;">Department of Information Technology</h1>
+        <h2 style="font-size: 20px; margin: 5px 0; text-transform: uppercase;">National Institute of Technology Karnataka, Surathkal-575025</h2>
+        <h3 style="font-size: 18px; margin: 20px 0;">Information Assurance and Security (IT352) Course Project</h3>
+        <p style="font-size: 16px; margin: 10px 0;">Title: "Phishing Detection Using Residual MLP"</p>
+        <p style="font-size: 16px; margin: 10px 0; font-style: italic;">Carried out by</p>
+        <p style="font-size: 16px; margin: 10px 0;">Gnaneshwar Kandula (221IT035)</p>
+        <p style="font-size: 16px; margin: 20px 0;">During Academic Session January – April 2025</p>
+
+        <!-- Single URL input form -->
+        <form action="/predict" method="post" style="margin: 20px 0;">
+            <label for="url" style="font-size: 16px; margin-right: 10px;">Enter URL:</label>
+            <input type="text" id="url" name="url" style="padding: 8px; font-size: 14px; width: 300px; border: 1px solid #000; border-radius: 5px;" />
+            <button type="submit" style="padding: 10px 20px; font-size: 14px; background-color: #0066cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Check</button>
+        </form>
+
+        <!-- File upload form -->
+        <form action="/predict_batch" method="post" enctype="multipart/form-data" style="margin: 20px 0;">
+            <label for="file" style="font-size: 16px; margin-right: 10px;">Upload URLs (.txt or .csv):</label>
+            <input type="file" id="file" name="file" accept=".txt,.csv" required style="font-size: 14px;" />
+            <button type="submit" style="padding: 10px 20px; font-size: 14px; background-color: #0066cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Check Batch</button>
+        </form>
+
+        <!-- Result display for single URL -->
+        {% if url and not batch_results %}
+        <div style="margin: 20px 0;">
+            <h2 style="font-size: 18px; margin: 10px 0;">Result for: {{ url }}</h2>
+            <p style="font-size: 16px; margin: 5px 0;"><strong>Status:</strong> {{ result }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Batch results display -->
+        {% if batch_results %}
+        <div style="margin: 20px 0;">
+            <h2 style="font-size: 18px; margin: 10px 0;">Batch Results:</h2>
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                <tr>
+                    <th style="border: 1px solid #000; padding: 8px;">URL</th>
+                    <th style="border: 1px solid #000; padding: 8px;">Status</th>
+                </tr>
+                {% for url, result in batch_results.items() %}
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">{{ url }}</td>
+                    <td style="border: 1px solid #000; padding: 8px;">{{ result }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a href="/download_results" style="display: inline-block; padding: 10px 20px; font-size: 14px; background-color: #0066cc; color: #fff; text-decoration: none; border-radius: 5px;">Download Results as CSV</a>
+        </div>
+        {% endif %}
+
+        <!-- Additional buttons -->
+        <div style="margin-top: 20px;">
+            <button onclick="alert('Display output functionality not implemented yet.')" style="display: block; width: 300px; padding: 10px; margin: 10px auto; font-size: 14px; background-color: #0066cc; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Press here to display output on SCREEN</button>
+            <button onclick="alert('Store output functionality not implemented yet.')" style="display: block; width: 300px; padding: 10px; margin: 10px auto; font-size: 14px; background-color: #0066cc; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Press here to store the output</button>
+        </div>
+    </div>
+</body>
+</html>
